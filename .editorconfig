@@ -1,6 +1,6 @@
 # .editorconfig - Personal EditorConfig configuration file.
-# Matteo Bertolino - <m.bertolino.m@gmail.com>
-# Wed Feb 05 2025 17:35:54 CET
+# Matteo Bertolino <m.bertolino.m@gmail.com>
+# Wed Mar 19 2025 18:35:32 CET
 
 # EditorConfig is awesome: https://editorconfig.org
 
@@ -13,3 +13,5 @@ indent_size = 4
 trim_trailing_whitespace = true
 end_of_line = lf
 insert_final_newline = true
+max_line_length = 100
+
