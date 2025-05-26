@@ -17,6 +17,9 @@ set -o vi
 
 alias please="sudo"
 
-export PATH="$PATH:/usr/local/bin/android_sdk/platform-tools:/usr/local/bin/android_sdk/build-tools/34.0.0"
-export ANDROID_SDK_ROOT="/usr/local/bin/android_sdk"
-export ANDROID_HOME="/usr/local/bin/android_sdk"
+export VISUAL=nvim
+export EDITOR="$VISUAL"
+
+export PATH="$PATH:/usr/local/bin/android_sdk/platform-tools/:/usr/local/bin/android_sdk/build-tools/34.0.0/:/home/sasoo/.local/share/gem/ruby/3.3.0/bin/"
+export ANDROID_SDK_ROOT="/usr/local/bin/android_sdk/"
+export ANDROID_HOME="/usr/local/bin/android_sdk/"
