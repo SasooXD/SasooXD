@@ -1,9 +1,7 @@
-# .bash_profile - Personal Bash profile configuration file.
+# .bash_profile: personal Bash profile configuration file.
 # Matteo Bertolino <m.bertolino.m@gmail.com>
-# Sun Apr 20 2025 17:38:57 CEST
+# Fri Jun 27 2025 16:14:05 CEST
 
-#
-# ~/.bash_profile
-#
+# This is free and unencumbered software released into the public domain.
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc

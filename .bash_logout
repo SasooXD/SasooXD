@@ -1,7 +1,6 @@
-# .bash_logout - Personal Bash logout configuration file.
+# .bash_logout: personal Bash logout configuration file.
 # Matteo Bertolino <m.bertolino.m@gmail.com>
-# Sun Apr 20 2025 17:38:06 CEST
+# Fri Jun 27 2025 16:13:13 CEST
 
-#
-# ~/.bash_logout
-#
+# This is free and unencumbered software released into the public domain.
+

@@ -1,3 +1,9 @@
+-- init.lua: personal Neovim initial configuration file.
+-- Matteo Bertolino <m.bertolino.m@gmail.com>
+-- Fri Jun 27 2025 17:16:02 CEST
+
+-- This is free and unencumbered software released into the public domain.
+
 vim.opt.number = true
 
 vim.opt.tabstop = 4

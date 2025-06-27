@@ -1,25 +1,20 @@
-# .bashrc - Personal Bash configuration file.
+# .bashrc: personal Bash configuration file.
 # Matteo Bertolino <m.bertolino.m@gmail.com>
-# Sun Apr 06 2025 18:04:05 CEST
+# Fri Jun 27 2025 16:06:15 CEST
 
-#
-# ~/.bashrc
-#
+# This is free and unencumbered software released into the public domain.
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
+
+tabs 4
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 PS1='[\u@\h \W]\$ '
 
 set -o vi
-
 alias please="sudo"
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"
-
-export PATH="$PATH:/usr/local/bin/android_sdk/platform-tools/:/usr/local/bin/android_sdk/build-tools/34.0.0/:/home/sasoo/.local/share/gem/ruby/3.3.0/bin/"
-export ANDROID_SDK_ROOT="/usr/local/bin/android_sdk/"
-export ANDROID_HOME="/usr/local/bin/android_sdk/"
