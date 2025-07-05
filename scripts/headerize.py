@@ -1,8 +1,8 @@
-#!/usr/bin/env python3
+#!/bin/env python3
 
 # headerize.py: creates a common header for scripts and dotfiles.
 # Matteo Bertolino <m.bertolino.m@gmail.com>
-# Fri Jun 27 2025 15:56:42 CEST
+# Sun Jul 06 2025 01:35:26 CEST
 
 # This is free and unencumbered software released into the public domain.
 
