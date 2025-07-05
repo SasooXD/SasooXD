@@ -1,0 +1,25 @@
+# .gitconfig: personal Git configuration file.
+# Matteo Bertolino <m.bertolino.m@gmail.com>
+# Sun Jul 06 2025 01:06:42 CEST
+
+# This is free and unencumbered software released into the public domain.
+
+[user]
+	name = Matteo Bertolino
+	email = m.bertolino.m@gmail.com
+	signingkey = 7F5E51E4B51452A2
+[core]
+	compression = 9
+	preloadindex = true
+	editor = nvim
+	autocrlf = input
+	safecrlf = true
+	whitespace = error
+[commit]
+	gpgsign = true
+[format]
+	signoff = true
+[color]
+	ui = auto
+[init]
+	defaultBranch = main
