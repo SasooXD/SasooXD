@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 # settmux.sh: configures tmux for various environments.
 # Matteo Bertolino <m.bertolino.m@gmail.com>

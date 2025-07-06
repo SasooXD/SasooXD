@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!/usr/bin/env python3
 
 # headerize.py: creates a common header for scripts and dotfiles.
 # Matteo Bertolino <m.bertolino.m@gmail.com>
