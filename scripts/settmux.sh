@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# settmux.sh: configures tmux for various environments.
+# settmux.sh: Configures tmux for various environments
 # Matteo Bertolino <m.bertolino.m@gmail.com>
-# Sun Jul 06 2025 01:35:22 CEST
+# Mon Jul 07 2025 15:59:24 CEST
 
 # This is free and unencumbered software released into the public domain.
 

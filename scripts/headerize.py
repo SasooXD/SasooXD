@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-# headerize.py: creates a common header for scripts and dotfiles.
+# headerize.py: Creates a common header for source code files
 # Matteo Bertolino <m.bertolino.m@gmail.com>
-# Mon Jul 07 2025 14:19:50 CEST
+# Mon Jul 07 2025 15:52:25 CEST
 
 # This is free and unencumbered software released into the public domain.
 
@@ -11,12 +11,9 @@ import os
 import re
 from datetime import datetime
 
-AUTHOR = "Matteo Bertolino <m.bertolino.m@gmail.com>"
-LICENSE = "This is free and unencumbered software released into the public domain."
-
-def get_date_line(comment):
-	now = datetime.now().astimezone()
-	return f"{comment} " + now.strftime("%a %b %d %Y %H:%M:%S %Z")
+COPYRIGHT_ASCII = "(c)"
+COPYRIGHT_UNICODE = "©"
+AUTHOR = "Matteo Bertolino"
 
 def read_file_lines(path):
 	with open(path, "r", encoding="utf-8") as f:
@@ -29,105 +26,81 @@ def write_file_lines(path, lines):
 def has_shebang(lines):
 	return lines and lines[0].startswith("#!")
 
-def find_header_start(lines, comment, filename):
-	# Prepare regex pattern for the header lines
-	prefix = re.escape(comment) + r"\s*"
-	filename_line = re.compile(rf"^{prefix}{re.escape(filename)}:.*$")
-	author_line   = re.compile(rf"^{prefix}{re.escape(AUTHOR)}$")
-	date_line     = re.compile(rf"^{prefix}[A-Z][a-z]{{2}} [A-Z][a-z]{{2}} \d{{2}} \d{{4}} \d{{2}}:\d{{2}}:\d{{2}} [A-Z]+$")
-	license_line  = re.compile(rf"^{prefix}{re.escape(LICENSE)}$")
+def parse_args():
+	args = sys.argv[1:]
 
-	for i in range(len(lines) - 4):
-		if (
-			filename_line.match(lines[i]) and
-			author_line.match(lines[i + 1]) and
-			date_line.match(lines[i + 2]) and
-			license_line.match(lines[i + 4])
-		):
+	if len(args) < 3:
+		print("Usage: headerize.py <file> <description> <license> [--ascii|-a]", file=sys.stderr)
+		sys.exit(1)
+
+	filename = args[0]
+	description = args[1]
+	license_name = args[2]
+	use_ascii = "--ascii" in args or "-a" in args
+
+	return filename, description, license_name, use_ascii
+
+def format_header(filename, description, license_name, use_ascii):
+	copyright_symbol = COPYRIGHT_ASCII if use_ascii else COPYRIGHT_UNICODE
+	year = datetime.now().year
+
+	return [
+		"/*",
+		f"\t{filename}: {description}",
+		"",
+		f"\tCopyright {copyright_symbol} {year} {AUTHOR}",
+		f"\tLicensed under the {license_name} license, see LICENSE for more details.",
+		"*/"
+	]
+
+def find_existing_header(lines, filename):
+	for i in range(len(lines) - 5):
+		if (lines[i].strip() == "/*"
+			and filename in lines[i + 1]
+			and "Copyright" in lines[i + 3]
+			and "Licensed under" in lines[i + 4]
+			and lines[i + 5].strip() == "*/"):
 			return i
 	return None
 
-def update_existing_header(lines, start, comment, filename, new_description=None):
-	if new_description:
-		lines[start] = f"{comment} {filename}: {new_description}"
-	lines[start + 2] = get_date_line(comment)
+def update_header(lines, start, filename, description, license_name, use_ascii):
+	lines[start + 1] = f"\t{filename}: {description}"
+	copyright_symbol = COPYRIGHT_ASCII if use_ascii else COPYRIGHT_UNICODE
+	year = datetime.now().year
+	lines[start + 3] = f"\tCopyright {copyright_symbol} {year} {AUTHOR}"
+	lines[start + 4] = f"\tLicensed under the {license_name} license, see LICENSE for more details."
 	return lines
-
-def create_new_header(comment, filename, description):
-	return [
-		f"{comment} {filename}: {description}",
-		f"{comment} {AUTHOR}",
-		get_date_line(comment),
-		"",
-		f"{comment} {LICENSE}"
-	]
 
 def insert_header(lines, header):
 	if has_shebang(lines):
 		shebang = lines[0]
-		content = lines[1:]
-		if content and content[0].strip() == "":
-			content = content[1:]
-		return [shebang, ""] + header + [""] + content
+		rest = lines[1:]
+		if rest and rest[0].strip() == "":
+			rest = rest[1:]
+		return [shebang, ""] + header + [""] + rest
 	else:
-		content = lines
-		if content and content[0].strip() == "":
-			content = content[1:]
-		return header + [""] + content
-
-def parse_args():
-	args = sys.argv
-	if len(args) < 2:
-		print(f"Usage: {args[0]} <file> [description] [-c <comment_char>].", file=sys.stderr)
-		sys.exit(1)
-
-	filename = args[1]
-	description = None
-	comment = "#"
-
-	# Handle -c
-	if "-c" in args:
-		c_index = args.index("-c")
-		if c_index + 1 >= len(args):
-			print("Error: missing comment character after -c.", file=sys.stderr)
-			sys.exit(1)
-		comment = args[c_index + 1]
-		# Description is optional, and must be right before -c if present
-		if c_index == 3:
-			description = args[2]
-		elif c_index != 2:
-			print(f"Usage: {args[0]} <file> [description] [-c <comment_char>].", file=sys.stderr)
-			sys.exit(1)
-	else:
-		if len(args) >= 3:
-			description = args[2]
-
-	return filename, description, comment
+		if lines and lines[0].strip() == "":
+			lines = lines[1:]
+		return header + [""] + lines
 
 def main():
-	filename, description, comment = parse_args()
+	filename, description, license_name, use_ascii = parse_args()
 
 	if not os.path.isfile(filename):
-		print(f"Error: can't find {filename}.", file=sys.stderr)
+		print(f"Error: file '{filename}' not found.", file=sys.stderr)
 		sys.exit(1)
 
-	basename = os.path.basename(filename)
 	lines = read_file_lines(filename)
-	start = find_header_start(lines, comment, basename)
+	basename = os.path.basename(filename)
+	start = find_existing_header(lines, basename)
 
 	if start is not None:
-		# Header exists: update date (and description if present)
-		lines = update_existing_header(lines, start, comment, basename, description)
+		lines = update_header(lines, start, basename, description, license_name, use_ascii)
 	else:
-		# Header not found: create only if description is provided
-		if description is None:
-			print(f"Error: can't update {filename} because no header was found.", file=sys.stderr)
-			sys.exit(1)
-		header = create_new_header(comment, basename, description)
+		header = format_header(basename, description, license_name, use_ascii)
 		lines = insert_header(lines, header)
 
 	write_file_lines(filename, lines)
 
 if __name__ == "__main__":
 	main()
-

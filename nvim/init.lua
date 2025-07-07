@@ -1,8 +1,23 @@
--- init.lua: personal Neovim initial configuration file.
+-- init.lua: Personal NeoVim initial configuration file
 -- Matteo Bertolino <m.bertolino.m@gmail.com>
--- Mon Jul 07 2025 14:19:42 CEST
+-- Mon Jul 07 2025 16:07:43 CEST
 
 -- This is free and unencumbered software released into the public domain.
+
+-- Fucking thing to make the stupid wayland clipboard work
+-- I wholeheartedly despise clipboard provider
+vim.g.clipboard = {
+    name = "wl-clipboard",
+    copy = {
+        ["+"] = "wl-copy --foreground --type text/plain",
+        ["*"] = "wl-copy --foreground --type text/plain",
+    },
+    paste = {
+        ["+"] = "wl-paste --no-newline",
+        ["*"] = "wl-paste --no-newline",
+    },
+    cache_enabled = true,
+}
 
 vim.cmd "colorscheme vim"
 

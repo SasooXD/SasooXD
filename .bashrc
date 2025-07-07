@@ -1,6 +1,6 @@
-# .bashrc: personal Bash configuration file.
+# .bashrc: Personal Bash configuration file
 # Matteo Bertolino <m.bertolino.m@gmail.com>
-# Fri Jun 27 2025 16:06:15 CEST
+# Mon Jul 07 2025 16:03:52 CEST
 
 # This is free and unencumbered software released into the public domain.
 
