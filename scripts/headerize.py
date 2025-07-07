@@ -2,12 +2,13 @@
 
 # headerize.py: creates a common header for scripts and dotfiles.
 # Matteo Bertolino <m.bertolino.m@gmail.com>
-# Sun Jul 06 2025 01:35:26 CEST
+# Mon Jul 07 2025 14:19:50 CEST
 
 # This is free and unencumbered software released into the public domain.
 
 import sys
 import os
+import re
 from datetime import datetime
 
 AUTHOR = "Matteo Bertolino <m.bertolino.m@gmail.com>"
@@ -28,23 +29,22 @@ def write_file_lines(path, lines):
 def has_shebang(lines):
 	return lines and lines[0].startswith("#!")
 
-def header_starts_at(lines, comment, filename, index):
-	try:
-		return(
-			lines[index].startswith(f"{comment} {filename}:") and
-			lines[index + 1].strip() == f"{comment} {AUTHOR}" and
-			lines[index + 2].strip().startswith(f"{comment} ") and
-			lines[index + 4].strip() == f"{comment} {LICENSE}"
-		)
-	except IndexError:
-		return False
-
 def find_header_start(lines, comment, filename):
-	for i, line in enumerate(lines):
-		if line.strip() == f"{comment} {AUTHOR}":
-			start = i - 1
-			if start >= 0 and header_starts_at(lines, comment, filename, start):
-				return start
+	# Prepare regex pattern for the header lines
+	prefix = re.escape(comment) + r"\s*"
+	filename_line = re.compile(rf"^{prefix}{re.escape(filename)}:.*$")
+	author_line   = re.compile(rf"^{prefix}{re.escape(AUTHOR)}$")
+	date_line     = re.compile(rf"^{prefix}[A-Z][a-z]{{2}} [A-Z][a-z]{{2}} \d{{2}} \d{{4}} \d{{2}}:\d{{2}}:\d{{2}} [A-Z]+$")
+	license_line  = re.compile(rf"^{prefix}{re.escape(LICENSE)}$")
+
+	for i in range(len(lines) - 4):
+		if (
+			filename_line.match(lines[i]) and
+			author_line.match(lines[i + 1]) and
+			date_line.match(lines[i + 2]) and
+			license_line.match(lines[i + 4])
+		):
+			return i
 	return None
 
 def update_existing_header(lines, start, comment, filename, new_description=None):
@@ -66,36 +66,41 @@ def insert_header(lines, header):
 	if has_shebang(lines):
 		shebang = lines[0]
 		content = lines[1:]
-
 		if content and content[0].strip() == "":
 			content = content[1:]
-
 		return [shebang, ""] + header + [""] + content
 	else:
 		content = lines
-
 		if content and content[0].strip() == "":
 			content = content[1:]
-
 		return header + [""] + content
 
 def parse_args():
-	if len(sys.argv) not in [2, 3, 5]:
-		print(f"Usage: {sys.argv[0]} <file> [description] [-c <comment_char>].", file=sys.stderr)
+	args = sys.argv
+	if len(args) < 2:
+		print(f"Usage: {args[0]} <file> [description] [-c <comment_char>].", file=sys.stderr)
 		sys.exit(1)
 
-	filename = sys.argv[1]
+	filename = args[1]
 	description = None
 	comment = "#"
 
-	if len(sys.argv) == 3 and sys.argv[2] != "-c":
-		description = sys.argv[2]
-	elif len(sys.argv) == 5 and sys.argv[3] == "-c":
-		description = sys.argv[2]
-		comment = sys.argv[4]
-	elif len(sys.argv) == 3 and sys.argv[2] == "-c":
-		print("Error: missing comment type.", file=sys.stderr)
-		sys.exit(1)
+	# Handle -c
+	if "-c" in args:
+		c_index = args.index("-c")
+		if c_index + 1 >= len(args):
+			print("Error: missing comment character after -c.", file=sys.stderr)
+			sys.exit(1)
+		comment = args[c_index + 1]
+		# Description is optional, and must be right before -c if present
+		if c_index == 3:
+			description = args[2]
+		elif c_index != 2:
+			print(f"Usage: {args[0]} <file> [description] [-c <comment_char>].", file=sys.stderr)
+			sys.exit(1)
+	else:
+		if len(args) >= 3:
+			description = args[2]
 
 	return filename, description, comment
 
@@ -111,8 +116,10 @@ def main():
 	start = find_header_start(lines, comment, basename)
 
 	if start is not None:
+		# Header exists: update date (and description if present)
 		lines = update_existing_header(lines, start, comment, basename, description)
 	else:
+		# Header not found: create only if description is provided
 		if description is None:
 			print(f"Error: can't update {filename} because no header was found.", file=sys.stderr)
 			sys.exit(1)
@@ -123,3 +130,4 @@ def main():
 
 if __name__ == "__main__":
 	main()
+
