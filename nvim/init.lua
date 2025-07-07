@@ -47,6 +47,11 @@ vim.opt.updatetime = 300
 vim.opt.timeout = true
 vim.opt.timeoutlen = 500
 
+-- menus n shit
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect', 'preview' }
+vim.opt.pumblend = 15 -- muhh transparency muuuuh
+vim.opt.winblend = 10 -- modern lloooookk muuhhh
+
 -- Invisible characters
 vim.opt.listchars = {
 	tab = '→ ',
@@ -56,4 +61,4 @@ vim.opt.listchars = {
 }
 
 -- Colors for invisible characters
-vim.api.nvim_set_hl(0, 'NonText', { fg = '#323232' })         -- Caratteri di fine riga
+vim.api.nvim_set_hl(0, 'NonText', { fg = '#323232' })
