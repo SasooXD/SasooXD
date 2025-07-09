@@ -13,11 +13,16 @@ case "$NAME" in
 	code)
 		tmux new-session -d -s "$NAME" "nvim $DIR"
 
-		tmux split-window -h -t "$NAME" -p 13
+		if [ "$(uname -n)" = "MiniBess" ]; then
+			tmux split-window -h -t "$NAME" -p 13
+		elif [ "$(uname -n)" = "OldBess" ]; then
+			tmux split-window -h -t "$NAME" -p 37
+		fi
+
 		tmux split-window -v -t "$NAME:0.1"
 
-		tmux send-keys -t "$NAME:0.1" "cd $DIR; clear" C-m
-		tmux send-keys -t "$NAME:0.2" "cd $DIR; clear" C-m
+		tmux send-keys -t "$NAME:0.1" "cd $(dirname "$DIR"); clear" C-m
+		tmux send-keys -t "$NAME:0.2" "cd $(dirname "$DIR"); clear" C-m
 
 		tmux select-pane -t "$NAME:0.0"
 
