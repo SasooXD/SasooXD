@@ -1,64 +1,16 @@
--- init.lua: Personal Neovim initial configuration file
--- Matteo Bertolino <m.bertolino.m@gmail.com>
--- Mon Jul 07 2025 16:28:27 CEST
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
 
--- This is free and unencumbered software released into the public domain.
+vim.opt.rtp:prepend(lazypath)
 
--- Fucking thing to make the stupid wayland clipboard work
--- I wholeheartedly despise clipboard provider
-vim.g.clipboard = {
-	name = "wl-clipboard",
-	copy = {
-		["+"] = "wl-copy --foreground --type text/plain",
-		["*"] = "wl-copy --foreground --type text/plain",
-	},
-	paste = {
-		["+"] = "wl-paste --no-newline",
-		["*"] = "wl-paste --no-newline",
-	},
-	cache_enabled = true,
-}
-
-vim.cmd "colorscheme vim"
-
-vim.cmd "map <Up> <Nop>"
-vim.cmd "map <Left> <Nop>"
-vim.cmd "map <Right> <Nop>"
-vim.cmd "map <Down> <Nop>"
-
--- At least some line number is on
-vim.opt.number = true
-vim.opt.relativenumber =true
-
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = false
-vim.opt.autoindent = true
-vim.opt.smartindent = true
-
-vim.opt.list = true
-
-vim.opt.cursorline = true
-vim.opt.wrap = true
-vim.opt.colorcolumn = '100'
-vim.opt.signcolumn = 'yes'
-
-vim.opt.updatetime = 300
-vim.opt.timeout = true
-vim.opt.timeoutlen = 500
-
--- menus n shit
-vim.opt.completeopt = { 'menu', 'menuone', 'noselect', 'preview' }
-vim.opt.pumblend = 15 -- muhh transparency muuuuh
-vim.opt.winblend = 10 -- modern lloooookk muuhhh
-
--- Invisible characters
-vim.opt.listchars = {
-	tab = '→ ',
-	space = '·',
-	trail = '•',
-	eol = '↴'
-}
-
--- Colors for invisible characters
-vim.api.nvim_set_hl(0, 'NonText', { fg = '#323232' })
+require("vim-options")
+require("lazy").setup("plugins")
