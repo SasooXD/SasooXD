@@ -1,5 +1,12 @@
 vim.cmd("colorscheme vim")
 
+vim.api.nvim_create_autocmd("BufWritePre", {
+	pattern = { "*.c", "*.cpp", "*.h", "*.hpp" },
+	callback = function()
+		vim.cmd("silent! undojoin | %!clang-format")
+	end,
+})
+
 -- At least some line number is on
 vim.opt.number = true
 vim.opt.relativenumber =true

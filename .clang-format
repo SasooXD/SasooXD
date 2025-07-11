@@ -1,0 +1,65 @@
+---
+Language:        Cpp
+
+# Indentation
+UseTab:              ForIndentation
+TabWidth:            4
+IndentWidth:         4
+ContinuationIndentWidth: 4
+
+# Allman supremacy
+BreakBeforeBraces:   Allman
+BraceWrapping:
+  AfterClass:            true
+  AfterControlStatement: true
+  AfterEnum:             true
+  AfterFunction:         true
+  AfterNamespace:        true
+  AfterStruct:           true
+  AfterUnion:            true
+  BeforeCatch:           true
+  BeforeElse:            true
+  BeforeLambdaBody:      true
+  IndentBraces:          false
+  SplitEmptyFunction:    true
+  SplitEmptyRecord:      true
+  SplitEmptyNamespace:   true
+
+# Namespace indentation
+NamespaceIndentation: All
+
+# No allignments because they're fairly stupid in 2025
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+AlignOperands:        false
+AlignTrailingComments: false
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+BreakConstructorInitializers: AfterColon
+
+# Short things
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: true
+BreakBeforeBinaryOperators: NonAssignment
+BreakBeforeTernaryOperators: true
+ColumnLimit: 100
+
+# Spacing n shit
+PointerAlignment:     Right
+SpaceAfterCStyleCast: true
+SpaceBeforeParens:    ControlStatements
+SpacesInAngles:       false
+SpacesInContainerLiterals: false
+SpacesInCStyleCastParentheses: false
+SpacesInParentheses:  false
+SpacesInSquareBrackets: false
+
+# Sorting
+SortIncludes:         true
+SortUsingDeclarations: true
+
+# Comments
+ReflowComments: true
+...
+
