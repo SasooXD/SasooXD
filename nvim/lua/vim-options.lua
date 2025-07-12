@@ -56,18 +56,7 @@ vim.keymap.set('n', '<leader>h', ':nohlsearch<CR>')
 
 -- Fucking thing to make the stupid wayland clipboard work
 -- I wholeheartedly despise clipboard provider
-vim.g.clipboard = {
-	name = "wl-clipboard",
-	copy = {
-		["+"] = "wl-copy --foreground --type text/plain",
-		["*"] = "wl-copy --foreground --type text/plain",
-	},
-	paste = {
-		["+"] = "wl-paste --no-newline",
-		["*"] = "wl-paste --no-newline",
-	},
-	cache_enabled = true,
-}
+vim.api.nvim_set_option("clipboard", "unnamedplus")
 
 vim.cmd("colorscheme vim")
 
