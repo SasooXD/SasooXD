@@ -1,2 +1,16 @@
+# config: Personal Ghostty configuration file
+# Matteo Bertolino <m.bertolino.m@gmail.com>
+# Fri Jul 18 2025 16:56:07 CEST
+
+# This is free and unencumbered software released into the public domain.
+
 font-family = Noto Sans Mono
 theme = Homebrew
+mouse-hide-while-typing = true
+adw-toolbar-style = raised-border
+bold-is-bright = true
+selection-invert-fg-bg = true
+cursor-invert-fg-bg = true
+cursor-style = block
+cursor-style-blink = true
+shell-integration-features = no-cursor
