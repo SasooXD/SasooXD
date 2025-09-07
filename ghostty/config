@@ -5,6 +5,7 @@
 # This is free and unencumbered software released into the public domain.
 
 font-family = Noto Sans Mono
+font-size= 12
 theme = Homebrew
 mouse-hide-while-typing = true
 adw-toolbar-style = raised-border
