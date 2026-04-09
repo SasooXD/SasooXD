@@ -28,11 +28,6 @@ vim.opt.updatetime = 300
 vim.opt.timeout = true
 vim.opt.timeoutlen = 500
 
-vim.cmd "map <Up> <Nop>"
-vim.cmd "map <Left> <Nop>"
-vim.cmd "map <Right> <Nop>"
-vim.cmd "map <Down> <Nop>"
-
 -- Invisible characters
 vim.opt.listchars = {
 	tab = '→ ',
@@ -59,11 +54,6 @@ vim.keymap.set('n', '<leader>h', ':nohlsearch<CR>')
 vim.api.nvim_set_option("clipboard", "unnamedplus")
 
 vim.cmd("colorscheme vim")
-
-vim.cmd "map <Up> <Nop>"
-vim.cmd "map <Left> <Nop>"
-vim.cmd "map <Right> <Nop>"
-vim.cmd "map <Down> <Nop>"
 
 -- Invisible characters
 vim.opt.listchars = {
