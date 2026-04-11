@@ -1,5 +1,6 @@
 vim.cmd("colorscheme vim")
 
+-- ClangFormat formatter
 vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = { "*.c", "*.cpp", "*.h", "*.hpp" },
 	callback = function()
@@ -39,8 +40,6 @@ vim.opt.listchars = {
 -- Colors for invisible characters
 vim.api.nvim_set_hl(0, 'NonText', { fg = '#323232' })
 
-vim.opt.swapfile = false
-
 -- Navigate vim panes better
 vim.keymap.set('n', '<c-k>', ':wincmd k<CR>')
 vim.keymap.set('n', '<c-j>', ':wincmd j<CR>')
@@ -52,14 +51,3 @@ vim.keymap.set('n', '<leader>h', ':nohlsearch<CR>')
 -- Fucking thing to make the stupid wayland clipboard work
 -- I wholeheartedly despise clipboard provider
 vim.api.nvim_set_option("clipboard", "unnamedplus")
-
--- Invisible characters
-vim.opt.listchars = {
-	tab = '→ ',
-	space = '·',
-	trail = '•',
-	eol = '↴'
-}
-
--- Colors for invisible characters
-vim.api.nvim_set_hl(0, 'NonText', { fg = '#323232' })
