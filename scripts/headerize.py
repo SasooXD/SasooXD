@@ -2,7 +2,7 @@
 
 # headerize.py: Creates a common header for source code files
 # Matteo Bertolino <m.bertolino.m@gmail.com>
-# Mon Jul 07 2025 15:52:25 CEST
+# Sat Apr 11 2026 20:05:47 CEST
 
 # This is free and unencumbered software released into the public domain.
 
@@ -27,10 +27,10 @@ def has_shebang(lines):
 	return lines and lines[0].startswith("#!")
 
 def parse_args():
-	args = sys.argv[1:]
+	args = sys.argv
 
 	if len(args) < 3:
-		print("Usage: headerize.py <file> <description> <license> [--ascii|-a]", file=sys.stderr)
+		print(f"Usage: {args[0]} <file> <description> <license> [--ascii|-a]", file=sys.stderr)
 		sys.exit(1)
 
 	filename = args[0]
