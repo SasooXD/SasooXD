@@ -16,3 +16,7 @@ cursor-style = block
 cursor-style-blink = true
 shell-integration-features = no-cursor
 maximize = true
+
+# Shaders
+custom-shader = shaders/cursor_warp.glsl
+custom-shader = shaders/ripple_cursor.glsl
