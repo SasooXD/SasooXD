@@ -16,6 +16,9 @@ tabs 4
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias please="sudo"
+alias ffmpeg='ffmpeg -hide_banner'
+alias ffprobe='ffprobe -hide_banner'
+alias ffplay='ffplay -hide_banner'
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"
