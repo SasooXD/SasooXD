@@ -33,9 +33,9 @@ def parse_args():
 		print(f"Usage: {args[0]} <file> <description> <license> [--ascii|-a]", file=sys.stderr)
 		sys.exit(1)
 
-	filename = args[0]
-	description = args[1]
-	license_name = args[2]
+	filename = args[1]
+	description = args[2]
+	license_name = args[3]
 	use_ascii = "--ascii" in args or "-a" in args
 
 	return filename, description, license_name, use_ascii
